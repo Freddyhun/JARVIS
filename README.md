@@ -25,4 +25,4 @@ Plays Back in Black (WIP)
 
 ## Licenses
 
-This project uses the [VOSK Offline Speech Recognition toolkit](https://alphacephei.com/vosk/) therefore it follows the [Apache-2.0 license](./LICENSE.MD)
+This project uses the [VOSK Offline Speech Recognition toolkit](https://alphacephei.com/vosk/) therefore it follows the [Apache-2.0 license](LICENSE.MD)
