@@ -13,7 +13,7 @@ Clips using shadowplay (if instant replay is turned on)
 ### Mute
 Mutes on discord (specific keybind, can be changed. By default it is F17)
 ### Record
-Toggles recording using Shadowplay
+Toggles recording using Shadowplay (ALT + F10)
 ### Close this game
 ALT+F4s the focused window
 ### Maximum Pulse
