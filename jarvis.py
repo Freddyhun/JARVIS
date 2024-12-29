@@ -9,7 +9,7 @@ import winshell
 import time
 from datetime import datetime
 from pyautogui import hotkey, press
-from playsound import playsound
+import pygame
 import psutil
 import wave
 
@@ -30,6 +30,9 @@ class SpeechModel:
             cls._instance = vosk.Model(path)
         return cls._instance
 
+# load pygame
+pygame.mixer.init()
+
 # Load the Vosk model once
 model = SpeechModel.get_model()
 
@@ -40,7 +43,7 @@ def capture_voice_input():
 
     print("Listening...")
     duration = 5  # seconds
-    fs = 16000  # Sampling frequency
+    fs = 32000  # Sampling frequency
     recording = sd.rec(int(duration * fs), samplerate=fs, channels=1, dtype='int16')
     sd.wait()  # Wait until recording is finished
 
@@ -57,7 +60,7 @@ def capture_voice_input():
 def convert_voice_to_text(audio_file):
     """Convert recorded audio to text using Vosk."""
     try:
-        recognizer = vosk.KaldiRecognizer(model, 16000)
+        recognizer = vosk.KaldiRecognizer(model, 32000)
         with wave.open(audio_file, "rb") as wf:
             while True:
                 data = wf.readframes(4000)
@@ -78,19 +81,22 @@ print("Current Time =", current_time)
 if int(current_time[0:2]) < 12:
     print("Good morning, sir.")
     try:
-        playsound('.\\sounds\\goodmorning.mp3')
+        pygame.mixer.music.load('.\\sounds\\goodmorning.mp3')
+        pygame.mixer.music.play()
     except:
         print("Error playing sound.")
 elif int(current_time[0:2]) > 12 and int(current_time[0:2]) < 18:
     print("Good afternoon, sir.")
     try:
-        playsound('.\\sounds\\goodafternoon.mp3')
+        pygame.mixer.music.load('.\\sounds\\goodafternoon.mp3')
+        pygame.mixer.music.play()
     except:
         print("Error playing sound.")
 elif int(current_time[0:2]) > 18:
     print("Good evening, sir.")
     try:
-        playsound('.\\sounds\\goodevening.mp3')
+        pygame.mixer.music.load('.\\sounds\\goodevening.mp3')
+        pygame.mixer.music.play()
     except:
         print("Error playing sound.")
 
@@ -100,7 +106,8 @@ def process_voice_command(text):
             print("Yes, sir. Clipped.")
             hotkey('alt','f10')
             try:
-                playsound('.\\sounds\\clip.mp3')
+                    pygame.mixer.music.load('.\\sounds\\clip.mp3')
+                    pygame.mixer.music.play()
             except:
                 print("Error playing sound.")
 
@@ -108,7 +115,8 @@ def process_voice_command(text):
             print("Yes, sir. Muting you on discord.")
             press('f17')
             try:
-                playsound('.\\sounds\\mute.mp3')
+                pygame.mixer.music.load('.\\sounds\\mute.mp3')
+                pygame.mixer.music.play()
             except:
                 print("Error playing sound.")
 
@@ -116,7 +124,8 @@ def process_voice_command(text):
             print("Yes, sir. Recording.")
             hotkey('alt','f9')
             try:
-                playsound('.\\sounds\\record.mp3')
+                pygame.mixer.music.load('.\\sounds\\record.mp3')
+                pygame.mixer.music.play()
             except:
                 print("Error playing sound.")
 
@@ -124,7 +133,8 @@ def process_voice_command(text):
             print('Yes, sir. Attempting to close the game.')
             hotkey('alt','f4')
             try:
-                playsound('.\\sounds\\close.mp3')
+                pygame.mixer.music.load('.\\sounds\\close.mp3')
+                pygame.mixer.music.play()
             except:
                 print("Error playing sound.")
 
@@ -133,7 +143,8 @@ def process_voice_command(text):
             pydirectinput.keyDown('q')
             pydirectinput.keyUp('q')
             try:
-                playsound('.\\sounds\\maximumpulse.mp3')
+                pygame.mixer.music.load('.\\sounds\\maximumpulse.mp3')
+                pygame.mixer.music.play()
             except:
                 print("Error playing sound.")
 
@@ -141,7 +152,8 @@ def process_voice_command(text):
             print("Yes, sir. Opening Marvel Rivals.")
             os.system("start steam://rungameid/2767030")
             try:
-                playsound('.\\sounds\\open.mp3')
+                pygame.mixer.music.load('.\\sounds\\open.mp3')
+                pygame.mixer.music.play()
             except:
                 print("Error playing sound.")
         
@@ -172,7 +184,8 @@ def process_voice_command(text):
             winshell.recycle_bin().empty(confirm=False, show_progress=False, sound=True)
             print("Yes, sir. Emptying the recycle bin.")
             try:
-                playsound('.\\sounds\\recyclebin.mp3')
+                pygame.mixer.music.load('.\\sounds\\recyclebin.mp3')
+                pygame.mixer.music.play()
             except:
                 print("Error playing sound.")
 
@@ -182,7 +195,8 @@ def process_voice_command(text):
             time.sleep(1)
             press('enter')
             try:    
-                playsound('.\\sounds\\connect.mp3')
+                pygame.mixer.music.load('.\\sounds\\connect.mp3')
+                pygame.mixer.music.play()
             except:
                 print("Error playing sound.")
 
@@ -190,14 +204,16 @@ def process_voice_command(text):
             print("Yes, sir. Getting the template ready.")
             try:
                 os.startfile(".\\other\\jarvis.psd")
-                playsound('.\\sounds\\meme.mp3')
+                pygame.mixer.music.load('.\\sounds\\meme.mp3')
+                pygame.mixer.music.play()
             except:
                 print("Couldn't open template, sir.")
 
         else:
             print("Sorry sir, I didn't understand that.")
             try:
-                playsound('.\\sounds\\error.mp3')
+                pygame.mixer.music.load('.\\sounds\\error.mp3')
+                pygame.mixer.music.play()
             except:
                 print("Error playing sound.")
         return
