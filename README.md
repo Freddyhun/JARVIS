@@ -16,7 +16,7 @@ Mutes on discord (specific keybind, can be changed. By default it is F17)
 Toggles recording using Shadowplay
 ### Close this game
 ALT+F4s the focused window
-### Maximum Pusle
+### Maximum Pulse
 Activates ULT in Marvel Rivals (by default Q)
 ### Open Rivals
 Opens Rivals via Steam
