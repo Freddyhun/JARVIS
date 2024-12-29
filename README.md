@@ -21,7 +21,7 @@ Activates ULT in Marvel Rivals (by default Q)
 ### Open Rivals
 Opens Rivals via Steam
 ### Music
-Plays Back in Black (WIP)
+Pauses/Resumes spotify using an AHK script. this is extremely ass but i'm lazy.
 
 ## Licenses
 
