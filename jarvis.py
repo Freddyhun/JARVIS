@@ -1,7 +1,7 @@
 ## LINK TO MODEL: https://alphacephei.com/vosk/models/vosk-model-en-us-0.22.zip
 ## FILES INSIDE THE ARCHIVE GO IN .\model
 
-
+import vosk
 import os
 import pyttsx3
 import speech_recognition as sr
@@ -28,6 +28,9 @@ def capture_voice_input():
         print("Listening...")
         audio = recognizer.listen(source)
     return audio
+
+model = vosk.Model(".\\model")
+## loads the model first otherwise it takes 3 years to recognize the first command
 
 now = datetime.now()
 current_time = now.strftime("%H:%M")
