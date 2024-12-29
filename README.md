@@ -1,6 +1,6 @@
-# JARVIS for Marvel Rivals
+# ridiculously basic JARVIS
 
-this is a silly recreation of JARVIS from Iron-Man that responds to specific commands that may or may not be related to Marvel Rivals
+this is a silly recreation of JARVIS from Iron-Man that responds to specific commands
 
 # Usage
 
@@ -17,7 +17,7 @@ Toggles recording using Shadowplay
 ### Close this game
 ALT+F4s the focused window
 ### Maximum Pulse
-Activates ULT in Marvel Rivals (by default Q)
+presses Q (joke for marvel rivals)
 ### Open Rivals
 Opens Rivals via Steam
 ### Music
