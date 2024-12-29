@@ -4,16 +4,15 @@
 import vosk
 import os
 import pyttsx3
-import speech_recognition as sr
-from pyautogui import hotkey, press
-from playsound import playsound
 import pydirectinput
 import winshell
 import time
 from datetime import datetime
+from pyautogui import hotkey, press
+from playsound import playsound
 import psutil
+import wave
 
-recognizer = sr.Recognizer()
 engine = pyttsx3.init()
 
 def process_status(process_name):
@@ -22,16 +21,56 @@ def process_status(process_name):
             return True
     return False
 
-def capture_voice_input():
-    with sr.Microphone() as source:
-        print("Listening...")
-        audio = recognizer.listen(source)
-    return audio
+class SpeechModel:
+    _instance = None
 
-# model = vosk.Model(".\\model")
-# # loads the model first otherwise it takes 3 years to recognize the first command
-# # update: the model is sentient so it loads again when using any command
-# # ????????????????????????????????????????????????????????????????????????????????????????
+    @classmethod
+    def get_model(cls, path=".\\model"):
+        if cls._instance is None:
+            cls._instance = vosk.Model(path)
+        return cls._instance
+
+# Load the Vosk model once
+model = SpeechModel.get_model()
+
+def capture_voice_input():
+    """Capture audio input from the microphone and save it as a WAV file."""
+    import sounddevice as sd
+    import numpy as np
+
+    print("Listening...")
+    duration = 5  # seconds
+    fs = 16000  # Sampling frequency
+    recording = sd.rec(int(duration * fs), samplerate=fs, channels=1, dtype='int16')
+    sd.wait()  # Wait until recording is finished
+
+    # Save the recording to a WAV file
+    temp_filename = "temp_audio.wav"
+    with wave.open(temp_filename, "wb") as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)  # 16-bit audio
+        wf.setframerate(fs)
+        wf.writeframes(recording.tobytes())
+
+    return temp_filename
+
+def convert_voice_to_text(audio_file):
+    """Convert recorded audio to text using Vosk."""
+    try:
+        recognizer = vosk.KaldiRecognizer(model, 16000)
+        with wave.open(audio_file, "rb") as wf:
+            while True:
+                data = wf.readframes(4000)
+                if len(data) == 0:
+                    break
+                if recognizer.AcceptWaveform(data):
+                    result = recognizer.Result()
+                    text = eval(result)["text"]
+                    print("You said:", text)
+                    return text
+    except Exception as e:
+        print("Error recognizing speech:", e)
+    return ""
 
 now = datetime.now()
 current_time = now.strftime("%H:%M")
@@ -54,18 +93,6 @@ elif int(current_time[0:2]) > 18:
         playsound('.\\sounds\\goodevening.mp3')
     except:
         print("Error playing sound.")
-
-def convert_voice_to_text(audio):
-    try:
-        text = recognizer.recognize_vosk(audio)
-        print("You said: " + text)
-    except sr.UnknownValueError:
-        text = ""
-        print("Sorry, I don't understand. P.S. Say 'Jarvis'")
-    except sr.RequestError as e:
-        text = ""
-        print("Error; {0}".format(e))
-    return text
 
 def process_voice_command(text):
     if "jarvis" in text.lower():
