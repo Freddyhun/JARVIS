@@ -43,7 +43,7 @@ def capture_voice_input():
         wf.setsampwidth(2)  # 16-bit audio
         wf.setframerate(fs)
         wf.writeframes(recording.tobytes())
-
+    
     return temp_filename
 
 def convert_voice_to_text(audio_file):
