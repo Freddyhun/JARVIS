@@ -21,7 +21,7 @@ presses Q (joke for marvel rivals)
 ### Open Rivals
 Opens Rivals via Steam
 ### Music
-Pauses/Resumes spotify using an AHK script. this is extremely ass but i'm lazy.
+Pauses/Resumes any media (if it plays/pauses wrong thing blame windows)
 
 ## Licenses
 
